@@ -1,0 +1,44 @@
+<notification-message class="row"></notification-message>
+<div class="main page-header login-page header-filter" filter-color="black">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-6 ml-auto mr-auto">
+                <form [formGroup]="userForm" *ngIf="!newUser" (ngSubmit)="login()"
+                    class="form ng-untouched ng-pristine ng-valid">
+                    <div class="card card-login">
+                        <div class="card-header card-header-primary text-center">
+                            <h4 class="card-title">Log in</h4>
+                        </div>
+                        <div class="card-body">
+                            <span class="bmd-form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend"><span class="input-group-text"><i
+                                                class="material-icons">email</i></span></div><input type="email"
+                                        placeholder="Email..." class="form-control" formControlName="email" required>
+                                    <div *ngIf="formErrors.email" class="alert alert-primary mt-3 w-100" style="margin-left: 20px;">
+                                        {{ formErrors.email }}
+                                    </div>
+                                </div>
+                            </span>
+                            <span class="bmd-form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend"><span class="input-group-text"><i
+                                                class="material-icons">lock_outline</i></span></div>
+                                    <input type="password" placeholder="Password..." class="form-control"
+                                        formControlName="password" required>
+                                    <div *ngIf="formErrors.password" class="alert alert-primary mt-3 w-100" style="margin-left: 20px;">
+                                        {{ formErrors.password }}
+                                    </div>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="card-footer justify-content-center">
+                            <button mat-raised-button type="submit" class="btn btn-primary pull-right">Login</button>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

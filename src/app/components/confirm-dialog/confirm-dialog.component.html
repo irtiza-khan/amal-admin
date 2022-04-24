@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content style="min-width: 500px; max-width: 80vw;">
+  {{data.message}}
+</div>
+<div mat-dialog-actions class="d-flex">
+    <button mat-button type="button" [mat-dialog-close]="false" class="btn btn-secondary ml-auto mr-2" cdkFocusInitial>Cancel</button>
+    <button *ngIf="!data.operation" mat-button [mat-dialog-close]="true" class="btn btn-danger" cdkFocusInitial>Delete</button>
+    <button *ngIf="data.operation" mat-button [mat-dialog-close]="true" class="btn btn-primary" cdkFocusInitial>Update</button>
+  </div>
+<!-- <div style="float:right;margin:20px;">
+    <input style="margin:0px 10px;" mat-raised-button type="button" value="Cancel"  [mat-dialog-close]="false">
+  <input type="button" value="Confirm" [mat-dialog-close]="true">
+</div>   -->

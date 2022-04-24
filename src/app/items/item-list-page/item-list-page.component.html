@@ -1,0 +1,57 @@
+<div class="main-content">
+  <div class="container-fluid">
+      <div class="w-900 mx-auto">
+          <div class="card" *ngIf="menus">
+              <div class="card-header card-header-tabs card-header-primary">
+                  <div class="d-flex">
+                      <h4 class="card-title my-auto pl-3">Menu Items</h4>
+                      <button mat-button type="button" class="ml-auto btn btn-grey" [routerLink]="[ '/menu/add' ]">Add Menu Item</button>
+                  </div>
+                  <div class="nav-tabs-navigation">
+                      <div class="nav-tabs-wrapper">
+                          <!-- <span class="nav-tabs-title">Employees:</span> -->
+                          <ul class="nav nav-tabs" data-tabs="tabs">
+                              <li class="nav-item">
+                                  <a mat-button class="nav-link active" (click)="activeCategory = 'all'"
+                                      data-toggle="tab">
+                                      All
+                                      <div class="ripple-container"></div>
+                                  </a>
+                              </li>
+                              <li class="nav-item" *ngFor="let category of categories | async">
+                                  <a mat-button class="nav-link" data-toggle="tab"
+                                      (click)="activeCategory = category.categoryId">
+                                      {{ category.name }}
+                                      <div class="ripple-container"></div>
+                                  </a>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+              <div class="card-body table-responsive">
+                  <table class="table table-hover">
+                      <thead class="text-warning">
+                          <th>Name</th>
+                          <th>Category</th>
+                          <th>Price</th>
+                          <th>Order</th>
+                      </thead>
+                      <tbody>
+                          <ng-container *ngFor="let menu of menus">
+                              <tr *ngIf="activeCategory === 'all' || menu.categoryId === activeCategory" [routerLink]="[ '/menu', menu.id ]" style="cursor: pointer">
+                                  <td>{{ menu.name }}</td>
+                                  <td>{{ catType[menu.categoryId] }}</td>
+                                  <td>{{ menu.price }} Pkr</td>
+                                  <td>{{ menu.order }}</td>
+                              </tr>
+                          </ng-container>
+
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+
+  </div>
+</div>

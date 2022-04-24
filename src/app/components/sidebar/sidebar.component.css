@@ -1,0 +1,55 @@
+.user {
+    padding-bottom: 20px;
+    margin: 20px auto 0;
+    position: relative
+}
+
+.user:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 15px;
+    height: 1px;
+    width: calc(100% - 30px);
+    background-color: hsla(0,0%,70.6%,.3)
+}
+
+.user .photo {
+    width: 34px;
+    height: 34px;
+    overflow: hidden;
+    float: left;
+    z-index: 5;
+    margin-right: 11px;
+    border-radius: 50%;
+    margin-left: 23px;
+    box-shadow: 0 16px 38px -12px rgba(0,0,0,.56),0 4px 25px 0 rgba(0,0,0,.12),0 8px 10px -5px rgba(0,0,0,.2)
+}
+
+.user .photo img {
+    width: 100%
+}
+
+.user a {
+    color: #3c4858;
+    padding: .5rem 15px;
+    white-space: nowrap
+}
+
+.user .user-info>a {
+    display: block;
+    line-height: 18px;
+    font-size: 14px
+}
+
+.user .user-info>a>span {
+    display: block;
+    position: relative;
+    opacity: 1
+}
+
+.user .user-info .caret {
+    position: absolute;
+    top: 8px;
+    right: 15px
+}

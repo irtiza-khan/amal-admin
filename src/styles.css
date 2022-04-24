@@ -1,0 +1,9 @@
+/* You can add global styles to this file, and also import other style files */
+
+.btn-grey {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.w-900 {
+    max-width: 900px;
+}

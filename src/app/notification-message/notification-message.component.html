@@ -1,0 +1,14 @@
+<div *ngIf="notify.msg | async as msg" class="fixed-bottom alert alert-with-icon mx-auto" data-notify="container"
+  [ngClass]="{ 
+    'alert-primary': msg.style == 'error',
+    'alert-success': msg.style == 'success',
+    'alert-info': msg.style == 'info',
+    'alert-warning': msg.style =='warning'
+  }" style="z-index: 1000; max-width: 700px;">
+  <i class="material-icons" data-notify="icon">{{ iconClass[msg.style] }}</i>
+  <button mat-button type="button" class="close" data-dismiss="alert" aria-label="Close"> <i
+      class="material-icons">close</i></button>
+  <span data-notify="message">{{ msg.content }}</span>
+
+
+</div>

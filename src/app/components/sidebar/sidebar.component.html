@@ -1,0 +1,31 @@
+<div class="logo w-100 mx-auto">
+    <a href="/" class="simple-text">
+        <div class="mx-auto w-100">
+            <!-- <img src="/assets/img/LOGO.svg" class="img-fluid" style="max-width: 80%;" /> -->
+            <h3>Amal</h3>
+        </div>
+    </a>
+</div>
+<div class="sidebar-wrapper">
+    <div class="user" *ngIf="user | async as user">
+        <div class="photo"><img src="./assets/img/avatar.png"></div>
+        <div class="user-info"><a data-toggle="collapse" href="#collapseExample" class="collapsed"
+                aria-expanded="true"><span>
+                    Welcome {{ user?.name }}<b class="caret"></b></span></a>
+            <div id="collapseExample" class="collapse">
+                <ul class="nav">
+                    <li class="nav-item"><a href="javascript:void(0)" class="nav-link" (click)="logout()">
+                            <span class="sidebar-normal">Logout</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <ul class="nav">
+        <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
+            <a class="nav-link" [routerLink]="[menuItem.path]">
+                <i class="material-icons">{{menuItem.icon}}</i>
+                <p>{{menuItem.title}}</p>
+            </a>
+        </li>
+    </ul>
+</div>
