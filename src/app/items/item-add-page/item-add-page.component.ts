@@ -18,9 +18,10 @@ export class ItemAddPageComponent implements OnInit {
 
   categories: any;
   menuForm: FormGroup;
-  menuCol: AngularFirestoreCollection;
+  itemDoc: AngularFirestoreDocument<any>;
   wait: boolean = false;
   control: any;
+  id: any;
 
   profileImg: string | ArrayBuffer;
   noImage = true;
@@ -35,41 +36,18 @@ export class ItemAddPageComponent implements OnInit {
 
   buildForm() {
     this.menuForm = this.fb.group({
-      'menuId': '',//
-      'name': '',// 
-      'price': 0.00,//
-      'imageUrl': '',//
-      'categoryId': '',
-      "webUrl": '',
-      'description': '',
-      'order': Number,
-      'options': this.fb.array([])
+      'category': ['', [Validators.required]],
+      'name': ['', [Validators.required]],
+      'price': [0.00, [Validators.required]],
+      'imageUrl': '',
+      'description': ['', [Validators.required]],
     });
 
-    this.control = <FormArray>this.menuForm.controls['options'];
   }
 
 
-  optionsData(): FormArray {
-    return this.menuForm.get('options') as FormArray;
-  }
-
-
-  newOptionData(): FormGroup {
-    return this.fb.group({
-      'title': ['', [Validators.required]],
-      'price': [0.00, [Validators.required, Validators.min(1)]]
-    })
-  }
-
-
-  addOptions() {
-    this.optionsData().push(this.newOptionData());
-    //this.control.push(this.fb.group({ 'title': '', 'price': 0.00 }));
-  }
-  removeOption(ind) {
-    this.optionsData().removeAt(ind)
-    //this.control.removeAt(ind);
+  get fromControl() {
+    return this.menuForm.controls;
   }
 
   uploadImg(event) {
@@ -121,26 +99,23 @@ export class ItemAddPageComponent implements OnInit {
 
 
   async createMenu() {
-    if(this.noImage){
+    if (this.noImage) {
       this.notify.update('Menu Image  is Required', 'error');
       return;
     }
     const menu = this.menuForm.value;
-    if (menu.options.length < 1) {
-      this.notify.update('Menu Options are Required', 'error');
-      return;
-    }
-
     this.wait = true;
     try {
       if (!this.noImage) {
         await this.getImgUrl(menu);
       }
-      await this.menuCol.add(menu)
+      menu.itemId = this.id;
+      await this.itemDoc.set(menu)
       this.wait = false;
       this.buildForm();
       this.profileImg = null;
-      this.router.navigate(['/menu'])
+      //TODO: Route to Menu List page
+      //this.router.navigate(['/menu'])
       this.notify.update('Menu Created Successfully', 'success');
 
     } catch (error) {
@@ -157,11 +132,9 @@ export class ItemAddPageComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm();
+    this.id = this.afs.createId();
     //we have to get the list of stylists for the we will query all of the stylists
-    this.menuCol = this.afs.collection('clients').doc("CB").collection('menu')
-
-    this.categories = this.afs.collection('clients').doc("CB").collection('categories').valueChanges();
-
+    this.itemDoc = this.afs.collection('items').doc(this.id);
   }
 
 }
