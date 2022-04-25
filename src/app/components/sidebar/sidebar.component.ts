@@ -9,8 +9,9 @@ declare interface RouteInfo {
     icon: string;
     class: string;
 }
-export const ROUTES: RouteInfo[] = [   
+export const ROUTES = [   
     { path: '/menu',          title: 'Menu Items',  icon: 'library_books', class: '' },
+    
 ];
 
 @Component({

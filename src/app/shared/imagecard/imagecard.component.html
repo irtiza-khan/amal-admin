@@ -1,0 +1,15 @@
+<div class="image-card card">
+  <div class="header">
+    <img [src]="image" class="img-fluid"  style="height:180px; object-fit:cover" />
+  </div>
+  <div class="body">
+    <h4>{{ title }}</h4>
+    <p>{{ desc }}</p>
+  </div>
+  <div class="footer">
+    <h4>Rs:{{price}}</h4>
+    <div class="ml-auto mt-2">
+      <button class="btn btn-primary ml-auto" (click)="viewMenu(id)">View Menu</button>
+    </div>
+  </div>
+</div>

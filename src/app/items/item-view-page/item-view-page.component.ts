@@ -26,8 +26,8 @@ export class ItemViewPageComponent implements OnInit {
   noImage = true;
   uploadTasks: any;
   sub: any;
-  menuDoc: any;
-  menu: any;
+  itemDoc: any;
+  item: any;
 
 
 
@@ -38,25 +38,15 @@ export class ItemViewPageComponent implements OnInit {
 
   buildForm() {
     this.menuForm = this.fb.group({
-      'menuId': '',//
-      'name': '',//
-      'price': 0.00,//
-      'imgUrl': '',//
-      'categoryId': '',
-      "webUrl": '',
-      'description': '',
-      'order': Number,
-      'options': this.fb.array([])
+      'category': [''],
+      'name': [''],
+      'price': [0.00],
+      'imageUrl': '',
+      'description': [''],
     });
-    this.control = <FormArray>this.menuForm.controls['options'];
   }
 
-  addOptions() {
-    this.control.push(this.fb.group({ 'title': '', 'price': 0.00 }));
-  }
-  removeOption(ind) {
-    this.control.removeAt(ind);
-  }
+
 
   uploadImg(event) {
     event = event.target.files[0];
@@ -67,13 +57,13 @@ export class ItemViewPageComponent implements OnInit {
     reader.onload = (_event) => {
       this.profileImg = reader.result;
     }
-    // let type = '_profile'
+
 
     let filePath = '';
 
     filePath = `menu/${event.name}`;
 
-    console.log(filePath);
+
     this.noImage = false;
     const ref = this.storage.ref(filePath);
     const task = ref.put(event);
@@ -89,8 +79,7 @@ export class ItemViewPageComponent implements OnInit {
         // The file's download URL
         finalize(async () => {
           let url = await this.uploadTasks.ref.getDownloadURL().toPromise();
-          console.log(url);
-          se.imgUrl = url;
+          se.imageUrl = url;
           resolve('resolved');
         }),
       ).subscribe();
@@ -112,10 +101,10 @@ export class ItemViewPageComponent implements OnInit {
 
     confirmDialog.afterClosed().subscribe(result => {
       if (result === true) {
-        this.menuDoc.update(menu).then(() => {
+        this.itemDoc.update(menu).then(() => {
           this.wait = false;
           this.noImage = true;
-          this.router.navigate(['/menu'])
+          //this.router.navigate(['/menu'])
           this.notify.update('Menu Updated Successfully', 'success');
         })
           .catch(error => this.handleError(error));
@@ -139,10 +128,10 @@ export class ItemViewPageComponent implements OnInit {
     });
     confirmDialog.afterClosed().subscribe(result => {
       if (result === true) {
-        this.menuDoc.delete().then(() => {
+        this.itemDoc.delete().then(() => {
           this.wait = false;
           this.router.navigate(['/menu']);
-          this.notify.update('Menu Deleted Successfully', 'info');
+          this.notify.update('Menu Deleted Successfully', 'success');
         })
           .catch(error => this.handleError(error));
       }
@@ -151,7 +140,6 @@ export class ItemViewPageComponent implements OnInit {
   }
 
   private handleError(error: Error) {
-    console.error(error);
     this.notify.update(error.message, 'error');
     throw new Error('Oh no!');
   }
@@ -160,22 +148,16 @@ export class ItemViewPageComponent implements OnInit {
 
     this.buildForm();
     this.sub = this.route.params.subscribe(params => {
-      this.menuDoc = this.afs.collection('clients').doc('CB').collection('menu').doc(params.id);
-      this.menuDoc.valueChanges().pipe(first()).subscribe(data => {
-        this.menu = data;
+      this.itemDoc = this.afs.collection('items').doc(params.id);
+      this.itemDoc.valueChanges().pipe(first()).subscribe(data => {
+        this.item = data;
         console.log(data);
         this.menuForm.patchValue(data);
         this.noImage = true;
-        this.profileImg = data.imgUrl;
-        data.options.forEach(element => {
-          this.control.push(this.fb.group({ 'title': element.title, 'price': element.price }));
-        });
-        // console.log(this.menuForm);
+        this.profileImg = data.imageUrl;
       })
 
     });
-
-    this.categories = this.afs.collection('clients').doc('CB').collection('categories').valueChanges();
 
   }
 

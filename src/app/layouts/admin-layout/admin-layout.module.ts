@@ -24,6 +24,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { ItemAddPageComponent } from 'app/items/item-add-page/item-add-page.component';
 import { ItemViewPageComponent } from 'app/items/item-view-page/item-view-page.component';
 import { ItemListPageComponent } from 'app/items/item-list-page/item-list-page.component';
+import { NavbarComponent } from 'app/shared/navbar/navbar.component';
+import { ImagecardComponent } from 'app/shared/imagecard/imagecard.component';
 
 
 @NgModule({
@@ -52,7 +54,9 @@ import { ItemListPageComponent } from 'app/items/item-list-page/item-list-page.c
     DashboardComponent,
     ItemAddPageComponent,
     ItemViewPageComponent,
-    ItemListPageComponent   
+    ItemListPageComponent,
+    NavbarComponent,
+    ImagecardComponent
   ]
 })
 

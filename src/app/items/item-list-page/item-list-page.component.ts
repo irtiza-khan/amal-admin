@@ -15,14 +15,8 @@ import { map } from 'rxjs/operators';
 })
 export class ItemListPageComponent implements OnInit {
 
-  menuCollection: AngularFirestoreCollection<any>;
-  login: any;
-  userSub: any;
-  menus: [any];
-  activeCategory: string;
-  categories: Observable<any[]>;
-  catType = {};
-
+  itemCollection: AngularFirestoreCollection<any>;
+  items: [any];
 
   constructor(private route: ActivatedRoute,
     private afs: AngularFirestore, private fb: FormBuilder,
@@ -46,24 +40,19 @@ export class ItemListPageComponent implements OnInit {
   }
 
 
-  getCategories(): Observable<any[]> {
-    return this.afs.collection('clients').doc('CB').collection('categories').valueChanges().pipe(
-      map((data: any) => {
-        console.log(data);
-        data.forEach(element => {
-          this.catType[element.categoryId] = element.name;
-        });
-        return data;
-
-      })
-    );
-  }
-
   async ngOnInit() {
-    this.activeCategory = 'all';
-    this.categories = this.getCategories();
-    this.menuCollection = this.afs.collection('clients').doc('CB').collection('menu');
-    this.menus = await this.getData(this.menuCollection);
+    this.itemCollection = this.afs.collection('items');
+    this.items = await this.getData(this.itemCollection);
+
+
+
+    //check if description is has more characters than, we us substring
+    this.items.forEach((item) => {
+      const desc = item.description ? (item.description.length <= 100 ? item.description : `${item.description.substring(0, 75)}...`) : '';
+      item.description =  desc;
+    })
+
+    console.log(this.items)
   }
 
 }
