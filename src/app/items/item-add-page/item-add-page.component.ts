@@ -114,8 +114,7 @@ export class ItemAddPageComponent implements OnInit {
       this.wait = false;
       this.buildForm();
       this.profileImg = null;
-      //TODO: Route to Menu List page
-      //this.router.navigate(['/menu'])
+      this.router.navigate(['/menu'])
       this.notify.update('Menu Created Successfully', 'success');
 
     } catch (error) {
@@ -133,7 +132,6 @@ export class ItemAddPageComponent implements OnInit {
   ngOnInit() {
     this.buildForm();
     this.id = this.afs.createId();
-    //we have to get the list of stylists for the we will query all of the stylists
     this.itemDoc = this.afs.collection('items').doc(this.id);
   }
 

@@ -24,3 +24,8 @@
     cursor: pointer;
     margin-left: 16px;
   }
+
+
+  .opacityDim {
+    opacity: 0.25;
+}

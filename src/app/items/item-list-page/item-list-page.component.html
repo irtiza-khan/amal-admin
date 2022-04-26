@@ -16,10 +16,19 @@
                 desc={{item.description}}
                 price={{item?.price}}
                 id={{item.id}}>
-                </app-imagecard>
-          </div>
+              </app-imagecard>
+            </div>
         </ng-container>
+      </div>
 
+      <div class="pagination-card  d-flex ml-auto">
+        <div class="btn-group d-flex ml-auto" role="group" aria-label="Basic example">
+          <button type="button" class="btn btn-warning" style="width: 120px; height:50px" 
+           [ngClass]="{opacityDim: pageNum === 1 || wait}" (click)="previous()" [disabled]="pageNum === 1">Previous</button>
+          <button type="button" class="btn btn-primary" style="width: 120px;"
+          [disabled]="  pageLen < 2 || wait" [ngClass]="{opacityDim:  pageLen < 2 || wait}" (click)="next()">Next</button>
+       </div>
     </div>
-  </div>
+
+
 

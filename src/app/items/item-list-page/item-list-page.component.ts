@@ -17,6 +17,16 @@ export class ItemListPageComponent implements OnInit {
 
   itemCollection: AngularFirestoreCollection<any>;
   items: [any];
+  lastSnapshot: any;
+  disablePagination: boolean;
+  paginationLen: number = 3;
+  firstSnapshot: any;
+  wait: boolean
+  first: any;
+  last: any;
+  pageNum: number;
+  pageLen: any;
+  direction: string = "next";
 
   constructor(private route: ActivatedRoute,
     private afs: AngularFirestore, private fb: FormBuilder,
@@ -27,12 +37,32 @@ export class ItemListPageComponent implements OnInit {
     return collection.get({ source: 'default' }).pipe(
       map((actions) => {
         const data = [];
+        let first = false;
+        let lastS: any;
+        let count = 0;
         actions.forEach((a) => {
-          const item = a.data() as any;
-          item.id = a.id;
-          data.push(item);
+          if (!first) {
+            this.firstSnapshot = a;
+            first = true;
+          }
+          count++;
+          if (count < this.paginationLen) {
+            lastS = a;
+            const item = a.data() as any;
+            item.id = a.id;
+            data.push(item);
+          }
 
         });
+        if (count < this.paginationLen && this.direction === 'next') {
+          console.log('Disable Next Button')
+          this.disablePagination = true;
+        }
+        if (lastS) {
+          this.lastSnapshot = lastS
+        } else {
+          this.firstSnapshot = this.lastSnapshot;
+        }
         return data;
       }),
     ).toPromise();
@@ -40,18 +70,59 @@ export class ItemListPageComponent implements OnInit {
   }
 
 
-  async ngOnInit() {
-    this.itemCollection = this.afs.collection('items');
-    this.items = await this.getData(this.itemCollection);
+  nextPage() {
+    console.log(`The Last ${this.lastSnapshot}`)
+    return this.afs.collection('items', (ref) => ref.orderBy('name', 'asc').startAfter(this.lastSnapshot).limit(this.paginationLen))
+  }
 
 
+  previousPage() {
+    return this.afs.collection('items', (ref) => ref.orderBy('name', 'asc').endAt(this.firstSnapshot).limitToLast(this.paginationLen));
+  }
 
-    //check if description is has more characters than, we us substring
+
+  async next() {
+    this.wait = true
+    this.direction = 'next'
+    let nextCollection = this.nextPage();
+    this.items = await this.getData(nextCollection);
     this.items.forEach((item) => {
       const desc = item.description ? (item.description.length <= 100 ? item.description : `${item.description.substring(0, 75)}...`) : '';
-      item.description =  desc;
+      item.description = desc;
     })
+    this.pageNum++;
+    this.pageLen = this.items.length;
+    this.wait = false;
+  }
 
+
+  async previous() {
+    this.wait = true;
+    this.direction = 'previous'
+    let previousCollection = this.previousPage();
+    this.items = await this.getData(previousCollection);
+    this.items.forEach((item) => {
+      const desc = item.description ? (item.description.length <= 100 ? item.description : `${item.description.substring(0, 75)}...`) : '';
+      item.description = desc;
+    })
+    this.pageNum--;
+    this.pageLen = this.items.length
+    this.wait = false;
+  }
+
+
+  
+  async ngOnInit() {
+    this.itemCollection = this.afs.collection('items', (ref) => ref.orderBy('name', 'asc').limit(this.paginationLen));
+    this.items = await this.getData(this.itemCollection);
+    this.items.forEach((item) => {
+      const desc = item.description ? (item.description.length <= 100 ? item.description : `${item.description.substring(0, 75)}...`) : '';
+      item.description = desc;
+    })
+    this.first = this.items[0];
+    this.last = this.items[this.items.length - 1];
+    this.pageNum = 1;
+    this.pageLen = this.items.length
     console.log(this.items)
   }
 
