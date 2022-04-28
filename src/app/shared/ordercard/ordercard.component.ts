@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 import { NotifyService } from 'app/core/notify.service';
 
 @Component({
@@ -14,27 +15,42 @@ export class OrdercardComponent implements OnInit {
   @Input() name: string;
   @Input() items: any[];
   @Input() status: string;
+  @Input() deliver: boolean;
 
-  constructor(private afs: AngularFirestore, private notify: NotifyService) { }
+  constructor(private afs: AngularFirestore, private notify: NotifyService, private router: Router) { }
 
 
   async updateStatus(id, status: any) {
     let newStatus: any;
-    console.log(`Status ${status}`)
     if (status === "preparing") {
       newStatus = "prepared";
-    } 
-
-    if(status === "prepared"){
-      newStatus = "delivering";
     }
-    if(status === "delivering"){
+
+    if (status === "prepared") {
+      console.log('In if')
+      if (this.deliver === true) {
+        newStatus = "delivering";
+      }
+      if (this.deliver === false) {
+        newStatus = "delivered"
+        await this.afs.collection('orders').doc(id).set({
+          status: newStatus
+        }, { merge: true })
+        this.router.navigate(['/order/delivered'])
+        this.notify.update('Status Updated', 'success');
+        return;
+      }
+     
+    }
+
+
+    if (status === "delivering") {
       newStatus = "delivered"
     }
-    console.log(`id ${id}`);
+
 
     await this.afs.collection('orders').doc(id).set({
-      status:newStatus
+      status: newStatus
     }, { merge: true })
 
     location.reload();

@@ -1,25 +1,27 @@
-
 <div class="image-card card">
-
   <div class="d-flex">
-    <h4 class="mx-auto"><b>Order ID: {{id}}</b></h4>
+    <h4 class="mx-auto">
+      <b>Order ID: {{ id }}</b>
+    </h4>
   </div>
-  <hr>
-  <h5 class="py-2"><b>Date</b>: {{time | date:'shortDate'}}</h5>
-  <h5><b>Order By</b>: {{name}} </h5>
+  <hr />
+  <h5 class="py-2"><b>Date</b>: {{ time | date: "shortDate" }}</h5>
+  <h5><b>Order By</b>: {{ name }}</h5>
   <h5><b>Items</b>:</h5>
   <ng-container *ngFor="let item of items">
     <div class="d-flex">
-      <h6>{{item.name}}</h6>
-      <p class="ml-auto">Qty: {{item.qty}}</p>
-    </div>
-    <div class="footer">
-      <div class="ml-auto mt-2">
-        <button class="btn btn-primary ml-auto" (click)="updateStatus(id,status)">Update Status</button>
-      </div>
+      <h6>{{ item.name }}</h6>
+      <p class="ml-auto">Qty: {{ item.qty }}</p>
     </div>
   </ng-container>
-
-  
-  
+  <div class="footer">
+    <div class="ml-auto mt-2">
+      <button
+        class="btn btn-primary ml-auto"
+        (click)="updateStatus(id, status)"
+      >
+        Update Status
+      </button>
+    </div>
+  </div>
 </div>
