@@ -26,6 +26,11 @@ import { ItemViewPageComponent } from 'app/items/item-view-page/item-view-page.c
 import { ItemListPageComponent } from 'app/items/item-list-page/item-list-page.component';
 import { NavbarComponent } from 'app/shared/navbar/navbar.component';
 import { ImagecardComponent } from 'app/shared/imagecard/imagecard.component';
+import { OrdercardComponent } from 'app/shared/ordercard/ordercard.component';
+import { OrderDelieveringListComponent } from 'app/order/order-delievering-list/order-delievering-list.component';
+import { OrderPreparedListComponent } from 'app/order/order-prepared-list/order-prepared-list.component';
+import { OrderDeliveredListComponent } from 'app/order/order-delivered-list/order-delivered-list.component';
+import { OrderPreparingListComponent } from 'app/order/order-preparing-list/order-preparing-list.component';
 
 
 @NgModule({
@@ -56,7 +61,13 @@ import { ImagecardComponent } from 'app/shared/imagecard/imagecard.component';
     ItemViewPageComponent,
     ItemListPageComponent,
     NavbarComponent,
-    ImagecardComponent
+    ImagecardComponent,
+    OrdercardComponent,
+    OrderDelieveringListComponent,
+    OrderDeliveredListComponent,
+    OrderPreparedListComponent,
+    OrderPreparingListComponent
+
   ]
 })
 

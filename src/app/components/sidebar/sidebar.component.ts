@@ -11,6 +11,11 @@ declare interface RouteInfo {
 }
 export const ROUTES = [   
     { path: '/menu',          title: 'Menu Items',  icon: 'library_books', class: '' },
+    {path: '/order/preparing',  title: 'Preparing Orders', icon: 'apps', class: ''},
+    {path: '/order/prepared',  title: 'Prepared Orders', icon: 'apps', class: ''},
+    {path: '/order/delievering',  title: 'Delievering Orders', icon: 'apps', class: ''},
+    {path: '/order/delivered',  title: 'Delivered Orders', icon: 'apps', class: ''},
+    
     
 ];
 

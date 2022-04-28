@@ -1,5 +1,5 @@
 <div class="container">
-    <app-navbar title="Menu Items"></app-navbar>
+    <app-navbar title="Menu Items" [showSearch]="false"></app-navbar>
     
     <div class="d-flex mb-5">
       <div>
@@ -7,15 +7,15 @@
       </div>
     </div>
 
-    <div class="row" style="margin-top: 10px">
+    <div class="row" style="margin-top: 10px" *ngIf="items?.length > 0">
         <ng-container *ngFor="let item of items">
             <div class="col-md-4 col-sm-12 col-xs-12">
                 <app-imagecard
                 image={{item?.imageUrl}}
                 title={{item?.name}}
-                desc={{item.description}}
+                desc={{item?.description}}
                 price={{item?.price}}
-                id={{item.id}}>
+                id={{item?.id}}>
               </app-imagecard>
             </div>
         </ng-container>

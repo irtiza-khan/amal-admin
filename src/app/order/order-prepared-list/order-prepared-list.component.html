@@ -1,0 +1,22 @@
+
+<div class="container">
+  <app-navbar title="Prepared Orders" [showSearch]="true"></app-navbar>
+
+  <div class="row">
+    <ng-container *ngFor="let order of orders">
+      <div class="col-md-4">
+        <app-ordercard
+          id={{order?.id}}
+          time={{order?.time}}
+          name={{order?.name}}
+          [items]="order?.items"
+          [status]="order?.status"
+        >
+
+        </app-ordercard>
+      </div>
+    </ng-container>
+   
+  </div>
+</div>
+
