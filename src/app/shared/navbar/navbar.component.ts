@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-navbar',
@@ -8,8 +9,8 @@ import { Component, OnInit, Input } from '@angular/core';
 export class NavbarComponent implements OnInit {
   @Input() title: string;
   @Input() showSearch: boolean;
-  constructor() {}
-
+  constructor(private fb:FormBuilder) {}
+  searchTerm: string;
   ngOnInit() {
   }
 

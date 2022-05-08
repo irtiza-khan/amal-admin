@@ -59,8 +59,6 @@ export class OrdercardComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('Items ');
-    console.log(this.items)
   }
 
 

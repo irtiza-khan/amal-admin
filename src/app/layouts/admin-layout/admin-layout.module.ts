@@ -53,6 +53,8 @@ import { OrderPreparingListComponent } from 'app/order/order-preparing-list/orde
     MatToolbarModule,
     MatSlideToggleModule,
     MatIconModule,
+
+    
     
   ],
   declarations: [
@@ -60,13 +62,14 @@ import { OrderPreparingListComponent } from 'app/order/order-preparing-list/orde
     ItemAddPageComponent,
     ItemViewPageComponent,
     ItemListPageComponent,
+    OrderPreparingListComponent,
     NavbarComponent,
     ImagecardComponent,
     OrdercardComponent,
     OrderDelieveringListComponent,
     OrderDeliveredListComponent,
     OrderPreparedListComponent,
-    OrderPreparingListComponent
+ 
 
   ]
 })

@@ -1,7 +1,34 @@
 
 <div class="container">
-  <app-navbar title="Prepared Orders" [showSearch]="true"></app-navbar>
+  <div class="d-flex mt-4">
+    <app-navbar title="Prepared Orders"[showSearch]="true"></app-navbar>
+    <div class="d-flex ml-auto mt-3">
+      <div class="ml-auto">
+        <mat-form-field appearance="fill" style="cursor:pointer" class="datepicker-form-field">
+          <mat-label>Search By date</mat-label>
+          <input matInput [matDatepicker]="datepicker"  [(ngModel)]="searchDate" (keyup.enter)="search()">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+          <mat-datepicker #datepicker>
+          </mat-datepicker>
+        </mat-form-field>
+      </div>
+    <div class="py-2 ml-3">
+      <button mat-mini-fab class="search-btn" (click)="search()">
+        <i class="material-icons" style="font-size: 18px">search</i>
+      </button>
+    </div>
+    </div>
+  </div>
 
+  <ng-container *ngIf="noOrder">
+    <div class="d-flex justify-content-center align-items-center">
+        <h3 class="my-4">No Orders Found</h3>
+    </div>
+  </ng-container>
+
+
+  <ng-container *ngIf="orders?.length > 0"> 
   <div class="row">
     <ng-container *ngFor="let order of orders">
       <div class="col-md-4">
@@ -19,5 +46,16 @@
     </ng-container>
    
   </div>
+    <div class="pagination-card  d-flex ml-auto">
+      <div class="btn-group d-flex ml-auto" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-warning" style="width: 120px; height:50px" 
+         [ngClass]="{opacityDim: pageNum === 1 || wait}" (click)="previous()" [disabled]="pageNum === 1">Previous</button>
+        <button type="button" class="btn btn-primary" style="width: 120px;"
+        [disabled]="  pageLen < 5 || wait" [ngClass]="{opacityDim:  pageLen < 5 || wait}" (click)="next()">Next</button>
+     </div>
+  </div>
+  </ng-container>
+
+
 </div>
 

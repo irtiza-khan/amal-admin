@@ -1,0 +1,16 @@
+
+::ng-deep .mat-calendar-body-selected{
+    background-color: #071D49;
+    color: white;
+}
+
+.pageNum-container{
+    border: 2px solid black;
+    background-color: blue;
+    border-radius: 80px;
+}
+
+.opacityDim {
+    opacity: 0.25;
+}
+
