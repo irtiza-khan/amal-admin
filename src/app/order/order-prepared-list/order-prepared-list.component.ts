@@ -44,6 +44,7 @@ export class OrderPreparedListComponent implements OnInit {
             lastS = a;
             const item = a.data() as any;
             item.id = a.id;
+            item.time =  item.time.toDate()
             data.push(item);
           }
 
@@ -125,9 +126,6 @@ export class OrderPreparedListComponent implements OnInit {
     this.direction = 'previous'
     let previouseCollection = this.previousPage();
     this.orders = await this.getData(previouseCollection);
-    this.orders.forEach((order) => {
-      order.time = order.time.toDate();
-    })
     this.pageNum--;
     this.pageLen = this.orders.length
     this.wait = false;
@@ -139,9 +137,6 @@ export class OrderPreparedListComponent implements OnInit {
     this.direction = 'next'
     let nextCollection = this.nextPage();
     this.orders = await this.getData(nextCollection);
-    this.orders.forEach((order) => {
-      order.time = order.time.toDate();
-    })
     this.pageNum++;
     this.pageLen = this.orders.length;
     this.wait = false;
@@ -154,10 +149,6 @@ export class OrderPreparedListComponent implements OnInit {
     orders = await this.getData(this.orderCol);
     if (orders.length > 0) {
       this.orders = orders;
-      this.orders.forEach((order) => {
-        order.time = order.time.toDate();
-      })
-
       this.first = this.orders[0];
       this.last = this.orders[this.orders.length - 1];
       this.pageNum = 1;
