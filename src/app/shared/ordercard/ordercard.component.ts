@@ -16,6 +16,7 @@ export class OrdercardComponent implements OnInit {
   @Input() items: any[];
   @Input() status: string;
   @Input() deliver: boolean;
+  @Input() show: boolean;
 
   constructor(private afs: AngularFirestore, private notify: NotifyService, private router: Router) { }
 
